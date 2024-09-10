@@ -1,0 +1,88 @@
+{
+  "data": [
+    {
+      "name": "hard-rock",
+      "signal": "87.6 FM",
+      "title": "Hard Rock FM",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQT01Pjw2o0oTg-QiF02j9QqyGU_HHUXahv6A&s",
+      "stream": "https://stream.radiojar.com/7csmg90fuqruv"
+    },
+    {
+      "name": "trax-fm",
+      "signal": "101.4 FM",
+      "title": "Trax FM",
+      "img": "https://static.mytuner.mobi/media/tvos_radios/bgaD97FGbw.jpg",
+      "stream": "https://stream.radiojar.com/rrqf78p3bnzuv"
+    },
+    {
+      "name": "suara-surabaya",
+      "signal": "100.0 FM",
+      "title": "Suara Surabaya",
+      "img": "https://www.trainerbisnis.com/wp-content/uploads/2021/10/logo-suara-surabaya-png.jpeg",
+      "stream": "https://c5.siar.us/proxy/ssfm/stream"
+    },
+    {
+      "name": "nagaswara",
+      "signal": "99.7 FM",
+      "title": "Nagaswara",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiBOnEj-8djWgu1_tWif8VE0nakuef0wbUPA&s",
+      "stream": "https://live.nagaswarafm.com:8088/stream"
+    },
+    {
+      "name": "i-fm",
+      "signal": "101.4 FM",
+      "title": "iRadio (Jakarta)",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyJ7-EaOyEY386tJvr2SngZPwPI1IswTmN8g&s",
+      "stream": "https://stream.radiojar.com/4ywdgup3bnzuv"
+    },
+    {
+      "name": "dahlia",
+      "signal": "101.5 FM",
+      "title": "Dahlia",
+      "img": "https://www.radiodahliafm.com/frontend/img/about/logo.png",
+      "stream": "https://svara-stream.radioddns.net:8443/bandung_dahliafm"
+    },
+    {
+      "name": "gajahmada",
+      "signal": "102.4 FM",
+      "title": "Gajahmada",
+      "img": "https://images.noiceid.cc/catalog/content-1684294234431",
+      "stream": "https://server.radioimeldafm.co.id/radio/8040/gajahmadafm"
+    },
+    {
+      "name": "smart-jakart",
+      "signal": "95.9 FM",
+      "title": "Smart (Jakarta)",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbTJIisNGh7QmE4ZpLrVw3W1W08HvGvLbU0A&s",
+      "stream": "https://cast2.my-control-panel.com/proxy/radioso3/stream"
+    },
+    {
+      "name": "raka",
+      "signal": "98.8 FM",
+      "title": "Raka",
+      "img": "https://pbs.twimg.com/profile_images/1536207935587508225/szlcoiTW_400x400.jpg",
+      "stream": "https://cast2.my-control-panel.com/proxy/radioso5/stream"
+    },
+    {
+      "name": "geronimo-jogja",
+      "signal": "106.1 FM",
+      "title": "Geronimo (Jogja)",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSR6Wwytt-7arCE8eFAnd6AEuxJOWUqPGS7w&s",
+      "stream": "https://ic.idstreamer.com:8090/live"
+    },
+    {
+      "name": "sonora-fm",
+      "signal": "98.0 FM",
+      "title": "Radio Sonora",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/4/43/Sonorafmsurabaya.png",
+      "stream": "https://cast3.asurahosting.com/proxy/radios25/stream"
+    },
+    {
+      "name": "elshinta-jakarta",
+      "signal": "90.0 FM",
+      "title": "Radio Elshinta (Jakarta)",
+      "img": "https://elshinta.com/template/elshinta_mobile/images/radio.png",
+      "stream": "https://stream-ssl.arenastreaming.com:8000/jakarta"
+    }
+  ]
+}
