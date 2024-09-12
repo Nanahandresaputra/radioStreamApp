@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:radio_stream/provider/statusPlayProvider.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
   final isHome;
@@ -34,7 +38,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
             actions: <Widget>[
               IconButton(
                 onPressed: () {
-                  // Show drawer
+                  Navigator.pop(exit(0));
                 },
                 icon: Icon(
                   Icons.exit_to_app,
@@ -55,13 +59,15 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
               },
             ),
             centerTitle: true,
-            title: Text(
-              'Test',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: MediaQuery.of(context).size.width * 0.05,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Nunito'),
+            title: Consumer<StatusPlay>(
+              builder: (context, status, _) => Text(
+                status.detailRadioValue?.title,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: MediaQuery.of(context).size.width * 0.05,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Nunito'),
+              ),
             ),
           );
   }

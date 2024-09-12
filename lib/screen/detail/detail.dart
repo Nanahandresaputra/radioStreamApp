@@ -1,10 +1,16 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:radio_stream/provider/statusPlayProvider.dart';
 import 'package:radio_stream/widgets/topBar.dart';
 
 class DetailRadio extends StatelessWidget {
+  final _audioPlayer = AudioPlayer();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: TopBar(
           isHome: false,
@@ -13,19 +19,27 @@ class DetailRadio extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           // color: Color(0xFF0A091E),
           decoration: BoxDecoration(
-              gradient: RadialGradient(colors: [
-            Color.fromARGB(255, 30, 28, 82),
+              gradient: LinearGradient(colors: [
             Color(0xFF0A091E),
-          ], center: Alignment.topCenter)),
+            Color.fromARGB(255, 30, 28, 82),
+            Color(0xFF0A091E)
+          ], begin: Alignment.bottomRight, end: Alignment.topLeft)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  ClipRRect(
-                    child: Image(image: AssetImage('assets/images.png')),
-                    borderRadius: BorderRadius.circular(8),
+                  Consumer<StatusPlay>(
+                    builder: (context, status, _) => ClipRRect(
+                      child: Image(
+                        image: NetworkImage(status.detailRadioValue?.img),
+                        height: MediaQuery.of(context).size.width * 0.6,
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        fit: BoxFit.contain,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.03,
@@ -44,13 +58,15 @@ class DetailRadio extends StatelessWidget {
                             size: MediaQuery.of(context).size.width * 0.045,
                           ),
                         ),
-                        Text(
-                          '90.89 FM',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.045,
-                              fontFamily: 'Nunito'),
+                        Consumer<StatusPlay>(
+                          builder: (context, status, _) => Text(
+                            status.detailRadioValue?.signal,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.045,
+                                fontFamily: 'Nunito'),
+                          ),
                         )
                       ],
                     ),
@@ -60,16 +76,39 @@ class DetailRadio extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.2,
                 height: MediaQuery.of(context).size.width * 0.2,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Icon(
-                    Icons.play_arrow_outlined,
-                    color: Colors.white,
-                    size: MediaQuery.of(context).size.width * 0.08,
+                child: Consumer<StatusPlay>(
+                  builder: (context, status, _) => ElevatedButton(
+                    onPressed: () async {
+                      status.status = status.statusValue == 'stop' ||
+                              status.statusValue == 'pause'
+                          ? 'play'
+                          : 'pause';
+
+                      status.statusValue == 'stop' ||
+                              status.statusValue == 'pause'
+                          ? _audioPlayer
+                              .setSource(
+                                  UrlSource(status.detailRadioValue?.stream))
+                              .then((value) => _audioPlayer.play(
+                                  UrlSource(status.detailRadioValue?.stream)))
+                          : _audioPlayer.pause();
+                    },
+                    child: status.statusValue == 'stop' ||
+                            status.statusValue == 'pause'
+                        ? Icon(
+                            Icons.play_arrow_outlined,
+                            color: Colors.white,
+                            size: MediaQuery.of(context).size.width * 0.08,
+                          )
+                        : Icon(
+                            Icons.pause_outlined,
+                            color: Colors.white,
+                            size: MediaQuery.of(context).size.width * 0.08,
+                          ),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.deepPurple,
+                        shape: CircleBorder()),
                   ),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
-                      shape: CircleBorder()),
                 ),
               ),
             ],
