@@ -7,7 +7,7 @@
 </array> -->
 
     <application
-        android:label="radio_stream"
+        android:label="On Radio"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         >
