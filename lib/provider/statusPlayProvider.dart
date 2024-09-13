@@ -6,13 +6,16 @@ import 'package:flutter/services.dart';
 class StatusPlay with ChangeNotifier {
   String _status = 'stop';
   dynamic _detailRadio = 'default';
+  bool _isError = false;
 
   String get statusValue => _status;
   dynamic get detailRadioValue => _detailRadio;
+  bool get isErrorValue => _isError;
 
   set status(String status) => {_status = status, notifyListeners()};
   set detailRadio(dynamic detailRadio) =>
       {_detailRadio = detailRadio, notifyListeners()};
+  set isError(bool isError) => {_isError = isError, notifyListeners()};
 }
 
 class GetListRadio {

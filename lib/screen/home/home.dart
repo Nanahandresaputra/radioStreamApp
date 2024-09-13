@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:radio_stream/provider/statusPlayProvider.dart';
 import 'package:radio_stream/widgets/buttonController.dart';
@@ -13,10 +14,17 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _getDatas = [];
   GetListRadio _getRradios = GetListRadio();
-  @override
-  void initState() {
-    super.initState();
+  bool _isConnect = true;
 
+  Future<void> _statusInternet() async {
+    bool isConnected = await InternetConnection().hasInternetAccess;
+    _isConnect = await isConnected;
+  }
+
+  void _funcDatas() {
+    setState(() {
+      _getDatas.clear();
+    });
     _getRradios.loadJsonFromAssets('assets/radio-data.json').then((value) {
       if (value.length > 0) {
         for (int i = 0; i < value.length; i++) {
@@ -30,6 +38,19 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Future<void> _refresh() async {
+    _funcDatas();
+    _statusInternet();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _funcDatas();
+    _statusInternet();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,7 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Stack(
           alignment: Alignment.bottomCenter,
           children: <Widget>[
-            // Positioned(bottom: -2, child: ButtonController()),
             Container(
               height: MediaQuery.of(context).size.height,
               padding: EdgeInsets.fromLTRB(
@@ -49,34 +69,39 @@ class _HomeScreenState extends State<HomeScreen> {
                   MediaQuery.of(context).size.height * 0.04,
                   MediaQuery.of(context).size.width * 0.05,
                   0),
-              // color: Color(0xFF0A091E),
               decoration: BoxDecoration(
                   gradient: RadialGradient(colors: [
                 Color.fromARGB(255, 30, 28, 82),
                 Color(0xFF0A091E),
               ], center: Alignment.topCenter)),
-
-              child: ListView(
-                children: <Widget>[
-                  Text(
-                    'List Radio Playlist',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: MediaQuery.of(context).size.width * 0.05,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.015,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).size.height * 0.15),
-                    child: Column(
-                        children: _getDatas.length > 0
-                            ? _getDatas
-                            : <Widget>[Container()]),
-                  )
-                ],
+              child: RefreshIndicator(
+                color: Color.fromARGB(255, 30, 28, 82),
+                onRefresh: () => _refresh(),
+                child: ListView(
+                  children: <Widget>[
+                    Text(
+                      'List Radio Playlist',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.015,
+                    ),
+                    _isConnect
+                        ? Container(
+                            margin: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).size.height * 0.15),
+                            child: Column(
+                                children: _getDatas.length > 0
+                                    ? _getDatas
+                                    : <Widget>[Container()]),
+                          )
+                        : Image(image: AssetImage('assets/err.gif'))
+                  ],
+                ),
               ),
             ),
             Consumer<StatusPlay>(
@@ -91,5 +116,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-// Positioned(bottom: -2, child: ButtonController())

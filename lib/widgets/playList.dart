@@ -1,13 +1,11 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:radio_player/radio_player.dart';
 import 'package:radio_stream/provider/statusPlayProvider.dart';
 import 'package:radio_stream/screen/detail/detail.dart';
 
 class PlayListRadio extends StatelessWidget {
   final detailData;
-
-  final _audioPlayer = AudioPlayer();
 
   PlayListRadio({Key? key, this.detailData}) : super(key: key);
   @override
@@ -15,19 +13,19 @@ class PlayListRadio extends StatelessWidget {
     return Consumer<StatusPlay>(
       builder: (context, status, _) => GestureDetector(
         onTap: () async {
-          // status.status = 'play';
-          status.detailRadio = detailData;
+          RadioPlayer _radioPlayer = RadioPlayer();
+          await _radioPlayer.stop();
+          status.status = await 'play';
+          status.detailRadio = await detailData;
+          await _radioPlayer.setChannel(
+              title: detailData?.title,
+              url: detailData?.stream,
+              imagePath: detailData?.img);
+
+          await _radioPlayer.play();
 
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => DetailRadio()));
-
-          // if (status.detailRadioValue != 'default') {
-          //   _audioPlayer
-          //       .setSource(UrlSource(status.detailRadioValue?.stream))
-          //       .then((value) => _audioPlayer
-          //           .play(UrlSource(status.detailRadioValue?.stream)));
-
-          // }
         },
         child: Container(
           margin: EdgeInsets.fromLTRB(
@@ -79,11 +77,6 @@ class PlayListRadio extends StatelessWidget {
                   )
                 ],
               ),
-              // Icon(
-              //   Icons.radio,
-              //   color: Colors.white.withOpacity(0.7),
-              //   size: MediaQuery.of(context).size.width * 0.06,
-              // )
             ],
           ),
         ),

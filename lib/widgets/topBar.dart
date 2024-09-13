@@ -14,7 +14,6 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print('size ------> ${MediaQuery.of(context).size.width * 0.11}');
     return isHome
         ? AppBar(
             backgroundColor: Color(0xFF0A071E),
@@ -22,8 +21,6 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
               padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
               child: Image(
                 image: AssetImage('assets/logo.png'),
-                // height: MediaQuery.of(context).size.height * 0.1,
-                // fit: BoxFit.contain,
               ),
             ),
             centerTitle: true,

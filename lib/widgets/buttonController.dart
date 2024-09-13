@@ -1,11 +1,11 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:radio_player/radio_player.dart';
 import 'package:radio_stream/provider/statusPlayProvider.dart';
 import 'package:radio_stream/screen/detail/detail.dart';
 
 class ButtonController extends StatelessWidget {
-  final _audioPlayer = AudioPlayer();
+  final RadioPlayer _radioPlayer = RadioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,6 @@ class ButtonController extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.08,
       padding: EdgeInsets.all(6),
       decoration: BoxDecoration(
-          // color: Color(0xFF0A091E),
           gradient: LinearGradient(
               colors: [Color(0xFF0A091E), Color.fromARGB(255, 29, 26, 71)],
               begin: Alignment.topLeft,
@@ -34,11 +33,18 @@ class ButtonController extends StatelessWidget {
         children: <Widget>[
           Consumer<StatusPlay>(
             builder: (context, status, _) => GestureDetector(
-              onTap: () {
-                _audioPlayer
-                    .setSource(UrlSource(status.detailRadioValue?.stream))
-                    .then((value) => _audioPlayer
-                        .play(UrlSource(status.detailRadioValue?.stream)));
+              onTap: () async {
+                RadioPlayer _radioPlayer = RadioPlayer();
+                if (status.statusValue == 'play') {
+                  await _radioPlayer.stop();
+                  status.status = await 'play';
+                  await _radioPlayer.setChannel(
+                      title: status.detailRadioValue?.title,
+                      url: status.detailRadioValue?.stream,
+                      imagePath: status.detailRadioValue?.img);
+
+                  await _radioPlayer.play();
+                }
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => DetailRadio()));
               },
@@ -89,6 +95,12 @@ class ButtonController extends StatelessWidget {
               Consumer<StatusPlay>(
                 builder: (context, status, _) => IconButton(
                     onPressed: () async {
+                      _radioPlayer.stateStream.listen((value) {
+                        value
+                            ? status.status = 'play'
+                            : status.status = 'pause';
+                      });
+
                       status.status = status.statusValue == 'stop' ||
                               status.statusValue == 'pause'
                           ? 'play'
@@ -96,12 +108,8 @@ class ButtonController extends StatelessWidget {
 
                       status.statusValue == 'stop' ||
                               status.statusValue == 'pause'
-                          ? _audioPlayer
-                              .setSource(
-                                  UrlSource(status.detailRadioValue?.stream))
-                              .then((value) => _audioPlayer.play(
-                                  UrlSource(status.detailRadioValue?.stream)))
-                          : _audioPlayer.pause();
+                          ? _radioPlayer.pause()
+                          : _radioPlayer.play();
                     },
                     icon: Icon(
                       status.statusValue == 'pause'
@@ -115,7 +123,7 @@ class ButtonController extends StatelessWidget {
                 builder: (context, status, _) => IconButton(
                     onPressed: () async {
                       status.status = 'stop';
-                      _audioPlayer.stop();
+                      _radioPlayer.stop();
                     },
                     icon: Icon(
                       Icons.cancel,
@@ -130,12 +138,3 @@ class ButtonController extends StatelessWidget {
     );
   }
 }
-
-
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.white70,
-          //     offset: Offset(0, 0),
-          //     blurRadius: 2,
-          //   )
-          // ]

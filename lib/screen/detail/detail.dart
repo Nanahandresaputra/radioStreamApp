@@ -1,11 +1,11 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:radio_player/radio_player.dart';
 import 'package:radio_stream/provider/statusPlayProvider.dart';
 import 'package:radio_stream/widgets/topBar.dart';
 
 class DetailRadio extends StatelessWidget {
-  final _audioPlayer = AudioPlayer();
+  final RadioPlayer _radioPlayer = RadioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +79,12 @@ class DetailRadio extends StatelessWidget {
                 child: Consumer<StatusPlay>(
                   builder: (context, status, _) => ElevatedButton(
                     onPressed: () async {
+                      _radioPlayer.stateStream.listen((value) {
+                        value
+                            ? status.status = 'play'
+                            : status.status = 'pause';
+                      });
+
                       status.status = status.statusValue == 'stop' ||
                               status.statusValue == 'pause'
                           ? 'play'
@@ -86,24 +92,20 @@ class DetailRadio extends StatelessWidget {
 
                       status.statusValue == 'stop' ||
                               status.statusValue == 'pause'
-                          ? _audioPlayer
-                              .setSource(
-                                  UrlSource(status.detailRadioValue?.stream))
-                              .then((value) => _audioPlayer.play(
-                                  UrlSource(status.detailRadioValue?.stream)))
-                          : _audioPlayer.pause();
+                          ? _radioPlayer.pause()
+                          : _radioPlayer.play();
                     },
                     child: status.statusValue == 'stop' ||
                             status.statusValue == 'pause'
                         ? Icon(
                             Icons.play_arrow_outlined,
                             color: Colors.white,
-                            size: MediaQuery.of(context).size.width * 0.08,
+                            // size: MediaQuery.of(context).size.width * 0.08,
                           )
                         : Icon(
                             Icons.pause_outlined,
                             color: Colors.white,
-                            size: MediaQuery.of(context).size.width * 0.08,
+                            // size: MediaQuery.of(context).size.width * 0.08,
                           ),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.deepPurple,
