@@ -1,4 +1,4 @@
-package com.example.radio_stream
+package com.nanadev.onradiostream
 
 import io.flutter.embedding.android.FlutterActivity
 

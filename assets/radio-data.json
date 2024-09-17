@@ -5,15 +5,9 @@
       "signal": "87.6 FM",
       "title": "Hard Rock FM",
       "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQT01Pjw2o0oTg-QiF02j9QqyGU_HHUXahv6A&s",
-      "stream": "https://stream.radiojar.com/7csmg90fuqruv"
+      "stream": "http://stream.radiojar.com/rrqf78p3bnzuv.m3u"
     },
-    {
-      "name": "trax-fm",
-      "signal": "101.4 FM",
-      "title": "Trax FM",
-      "img": "https://static.mytuner.mobi/media/tvos_radios/bgaD97FGbw.jpg",
-      "stream": "https://stream.radiojar.com/rrqf78p3bnzuv"
-    },
+
     {
       "name": "suara-surabaya",
       "signal": "100.0 FM",

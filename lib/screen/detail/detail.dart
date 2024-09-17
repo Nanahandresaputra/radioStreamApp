@@ -100,16 +100,17 @@ class DetailRadio extends StatelessWidget {
                         ? Icon(
                             Icons.play_arrow_outlined,
                             color: Colors.white,
-                            // size: MediaQuery.of(context).size.width * 0.08,
+                            size: MediaQuery.of(context).size.width * 0.08,
                           )
                         : Icon(
                             Icons.pause_outlined,
                             color: Colors.white,
-                            // size: MediaQuery.of(context).size.width * 0.08,
+                            size: MediaQuery.of(context).size.width * 0.08,
                           ),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.deepPurple,
-                        shape: CircleBorder()),
+                        shape: CircleBorder(),
+                        padding: EdgeInsets.zero),
                   ),
                 ),
               ),
